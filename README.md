@@ -1,12 +1,9 @@
 # Standard ACL
 
- 1. Range: Standard ACLs use identification numbers 1–99 and 1300–1999.
-
- 2. Criteria: They only inspect the source address. They cannot filter based on destination, protocol (TCP/UDP), or port numbers.
-
- 3. Placement: Because they lack destination awareness, the general rule is to place them as close to the destination as possible. Placing them near the source might inadvertently block traffic destined for other allowed networks.
-
-Implicit Deny: Every ACL ends with an invisible "deny all" statement. If a packet doesn't match any permit lines, it is dropped.
+1. **Range:** Standard ACLs use identification numbers 1–99 and 1300–1999.
+2. **Criteria:** They only inspect the source address. They cannot filter based on destination, protocol (TCP/UDP), or port numbers.
+3. **Placement:** Because they lack destination awareness, the general rule is to place them as close to the destination as possible. Placing them near the source might inadvertently block traffic destined for other allowed networks.
+4. **Implicit Deny:** Every ACL ends with an invisible "deny all" statement. If a packet doesn't match any permit lines, it is dropped.
 
 ## Network Topology
 
@@ -120,6 +117,4 @@ S    192.168.2.0/24 [1/0] via 203.0.113.1
      203.0.113.0/24 is variably subnetted, 2 subnets, 2 masks
 C       203.0.113.0/30 is directly connected, Serial0/1/0
 L       203.0.113.2/32 is directly connected, Serial0/1/0
-
-R2#
 ```
