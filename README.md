@@ -10,7 +10,7 @@ Implicit Deny: Every ACL ends with an invisible "deny all" statement. If a packe
 
 ## Network Topology
 
-![Network Topology](./topology/topology-img.png)
+![Network Topology](./topology/topology-img2.png)
 
 ## Network Architecture & Addressing
 
@@ -37,16 +37,36 @@ The filtering policies are implemented on the destination router (**R2**) using 
 ### 1. Securing SERVER 1 Segment (Gig0/0/0)
 ```bash
 R2# configure terminal
-R2(config)# access-list 10 deny 192.168.2.0 0.0.0.255
-R2(config)# access-list 10 permit any
-R2(config)# interface GigabitEthernet0/0/0
-R2(config-if)# ip access-group 10 out
+R2(config)#ip access-list standard BLOCK_LAN1_To_SERVER2
+R2(config-std-nacl)#deny 192.168.1.0 0.0.0.255
+R2(config-std-nacl)#permit any
+R2(config-std-nacl)#remark #Block LAN1 access to SERVER2#
+
+R2(config)#interface gigabitEthernet 0/0/1
+R2(config-if)#ip access-group BLOCK_LAN1_To_SERVER2 out
+
 ```
 ### 2. Securing SERVER 2 Segment (Gig0/0/1)
 ```bash
 R2# configure terminal
-R2(config)# access-list 20 deny 192.168.1.0 0.0.0.255
-R2(config)# access-list 20 permit any
-R2(config)# interface GigabitEthernet0/0/1
-R2(config-if)# ip access-group 20 out
+R2(config)#ip access-list standard BLOCK_LAN2_to_SERVER1
+R2(config-std-nacl)#deny 192.168.2.0 0.0.0.255 
+R2(config-std-nacl)#permit any
+R2(config-std-nacl)#remark #Block LAN2 access to SERVER1#
+
+R2(config)#interface gigabitEthernet 0/0/0
+R2(config-if)#ip access-group BLOCK_LAN2_to_SERVER1 out
+
+
 ```
+## Show Configuration
+### ACL
+```bash
+R2#show access-lists 
+Standard IP access list BLOCK_LAN1_To_SERVER2
+    10 deny 192.168.1.0 0.0.0.255
+    20 permit any
+Standard IP access list BLOCK_LAN2_to_SERVER1
+    10 deny 192.168.2.0 0.0.0.255
+    20 permit any
+
