@@ -1,10 +1,10 @@
 # Standard ACL
 
-Range: Standard ACLs use identification numbers 1–99 and 1300–1999.
+ 1. Range: Standard ACLs use identification numbers 1–99 and 1300–1999.
 
-Criteria: They only inspect the source address. They cannot filter based on destination, protocol (TCP/UDP), or port numbers.
+ 2. Criteria: They only inspect the source address. They cannot filter based on destination, protocol (TCP/UDP), or port numbers.
 
-Placement: Because they lack destination awareness, the general rule is to place them as close to the destination as possible. Placing them near the source might inadvertently block traffic destined for other allowed networks.
+ 3. Placement: Because they lack destination awareness, the general rule is to place them as close to the destination as possible. Placing them near the source might inadvertently block traffic destined for other allowed networks.
 
 Implicit Deny: Every ACL ends with an invisible "deny all" statement. If a packet doesn't match any permit lines, it is dropped.
 
@@ -33,7 +33,7 @@ To protect sensitive infrastructure, the following traffic rules are enforced at
 ## Configuration & Implementation
 
 The filtering policies are implemented on the destination router (**R2**) using Standard Numbered ACLs applied to outbound interfaces.
-Noted: Standard ACL must apply at Exit Interface + Out
+**Noted: Standard ACL must apply at Exit Interface + Out**
 
 ### 1. Securing SERVER 1 Segment (Gig0/0/0)
 ```bash
